@@ -1,0 +1,68 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model UserAuthorization {
+    id String @id @default(uuid())
+
+    email String @unique
+
+    user    User   @relation(fields: [user_id], references: [id])
+    user_id String @unique
+}
+
+model User {
+    id String @id @default(uuid())
+
+    company    Company @relation(fields: [company_id], references: [id])
+    company_id String
+
+    UserAuthorization UserAuthorization?
+
+    username     String
+    name         String
+    picture_url  String?
+    registration Registration[]
+}
+
+model Company {
+    id String @id @default(uuid())
+
+    name        String?
+    picture_url String?
+    
+
+    users User[]
+
+    settings    Settings @relation(fields: [settings_id], references: [id])
+    settings_id String   @unique
+}
+
+model Settings {
+    id String @id @default(uuid())
+
+    push_notifications_at String
+    auto_deny_at          String
+
+    company Company?
+}
+
+enum RegistrationStatus {
+    In
+    Out
+}
+
+model Registration {
+    id String @id @default(uuid())
+
+    user    User   @relation(fields: [user_id], references: [id])
+    user_id String
+
+    registered_at DateTime           @default(now())
+    status        RegistrationStatus
+}
