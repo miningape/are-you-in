@@ -1,10 +1,19 @@
 "use client";
 
-import { Company, Settings, User, UserAuthorization } from "@prisma/client";
+import {
+  Company,
+  Registration,
+  Settings,
+  User,
+  UserAuthorization,
+} from "@prisma/client";
 import React, { createContext, useContext } from "react";
 
-type UserFromAuth = UserAuthorization & {
-  user: User & { company: Company & { settings: Settings } };
+export type UserFromAuth = UserAuthorization & {
+  user: User & {
+    company: Company & { settings: Settings };
+    registrations: Registration[];
+  };
 };
 
 const UserAuthContext = createContext<UserFromAuth>({
@@ -28,6 +37,7 @@ const UserAuthContext = createContext<UserFromAuth>({
         push_notifications_at: "10:00",
       },
     },
+    registrations: [],
   },
 });
 

@@ -11,14 +11,7 @@ import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/db";
-
-export const UserClaims = z.object({
-  given_name: z.string(),
-  family_name: z.string(),
-  nickname: z.string(),
-  picture: z.string(),
-  email: z.string(),
-});
+import { UserClaims } from "@/app/UserClaims";
 
 export const GET = handleAuth({
   callback: handleCallback({

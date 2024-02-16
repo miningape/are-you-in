@@ -22,12 +22,15 @@ model User {
     company    Company @relation(fields: [company_id], references: [id])
     company_id String
 
-    UserAuthorization UserAuthorization?
+    authorization UserAuthorization?
 
-    username     String
-    name         String
-    picture_url  String?
-    registration Registration[]
+    username      String
+    name          String
+    picture_url   String?
+    registrations Registration[]
+
+    created_at DateTime  @default(now())
+    deleted_at DateTime?
 }
 
 model Company {
@@ -35,7 +38,6 @@ model Company {
 
     name        String?
     picture_url String?
-    
 
     users User[]
 
@@ -63,6 +65,9 @@ model Registration {
     user    User   @relation(fields: [user_id], references: [id])
     user_id String
 
-    registered_at DateTime           @default(now())
-    status        RegistrationStatus
+    day        DateTime           @default(now()) @db.Date
+    created_at DateTime           @default(now())
+    status     RegistrationStatus
+
+    @@unique([user_id, created_at])
 }

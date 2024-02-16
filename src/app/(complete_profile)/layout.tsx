@@ -3,10 +3,11 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { getSession } from "@auth0/nextjs-auth0";
-import { UserClaims } from "../api/auth/[auth0]/route";
 import { redirect } from "next/navigation";
 import { prisma } from "@/db";
 import { AuthProvider } from "./AuthProvider";
+import { UserClaims } from "../UserClaims";
+import { readAuth } from "./readAuth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,33 +21,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession();
-
-  const res = UserClaims.safeParse(session?.user);
-  if (!res.success) {
-    redirect("/api/auth/logout");
-  }
-
-  const auth = await prisma.userAuthorization.findUnique({
-    where: {
-      email: res.data.email,
-    },
-    include: {
-      user: {
-        include: {
-          company: {
-            include: {
-              settings: true,
-            },
-          },
-        },
-      },
-    },
-  });
-
+  const auth = await readAuth();
   if (auth === null || auth.user.company.name === null) {
-    console.log("Redirecting");
-    redirect("http://localhost:3000/setup");
+    redirect("/setup");
   }
 
   return (

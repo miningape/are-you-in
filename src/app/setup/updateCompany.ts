@@ -12,24 +12,22 @@ export interface UpdateCompanyDto {
 
 export async function updateCompany(
   companyId: string,
-  updateCompanyDto: UpdateCompanyDto
+  updateCompanyDto: Partial<UpdateCompanyDto>
 ) {
-  try {
-    await prisma.company.update({
-      where: {
-        id: companyId,
-      },
-      data: {
-        name: updateCompanyDto.companyName,
-        settings: {
-          update: {
-            auto_deny_at: updateCompanyDto.autoDenyAt,
-            push_notifications_at: updateCompanyDto.pushNotificationsAt,
-          },
+  await prisma.company.update({
+    where: {
+      id: companyId,
+    },
+    data: {
+      name: updateCompanyDto.companyName,
+      settings: {
+        update: {
+          auto_deny_at: updateCompanyDto.autoDenyAt,
+          push_notifications_at: updateCompanyDto.pushNotificationsAt,
         },
       },
-    });
-  } finally {
-    redirect("/");
-  }
+    },
+  });
+
+  redirect("/");
 }

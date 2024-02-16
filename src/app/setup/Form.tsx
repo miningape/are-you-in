@@ -14,7 +14,7 @@ export function Form({ companyId }: { companyId: string }) {
     updateCompany(companyId, dto);
 
   return (
-    <div className="flex bg-zinc-200 w-dvw">
+    <div className="flex bg-zinc-200 w-dvw text-slate-800">
       <div className="flex bg-zinc-800 w-[50dvw] h-dvh">
         <div className="m-auto text-4xl text-zinc-200">
           Welcome to <span className="font-bold text-5xl">Are You In</span>

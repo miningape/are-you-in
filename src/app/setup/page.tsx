@@ -2,9 +2,9 @@ import "../globals.css";
 
 import { Form } from "./Form";
 import { getSession } from "@auth0/nextjs-auth0";
-import { UserClaims } from "../api/auth/[auth0]/route";
 import { redirect } from "next/navigation";
 import { prisma } from "@/db";
+import { UserClaims } from "../UserClaims";
 
 export default async function Home() {
   const session = await getSession();
@@ -14,7 +14,7 @@ export default async function Home() {
     redirect("/api/auth/logout");
   }
 
-  const auth = await prisma.userAuthorization.findUniqueOrThrow({
+  const auth = await prisma.userAuthorization.findUnique({
     where: {
       email: res.data.email,
     },
@@ -26,6 +26,10 @@ export default async function Home() {
       },
     },
   });
+
+  if (auth === null) {
+    redirect("/api/auth/logout");
+  }
 
   if (auth.user.company.name !== null) {
     redirect("/");
