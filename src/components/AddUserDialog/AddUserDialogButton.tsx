@@ -1,12 +1,13 @@
 "use client";
 
+import { Button } from "@nextui-org/react";
 import { AddUserDialog } from "./AddUserDialog";
 import React, { useState } from "react";
 
 export function AddUserDialogButton({
-  children,
+  children = <>Add a new member</>,
 }: {
-  children: React.JSX.Element;
+  children?: React.JSX.Element;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,7 +21,14 @@ export function AddUserDialogButton({
 
   return (
     <>
-      <div onClick={open}>{children}</div>
+      <Button
+        color="warning"
+        variant="ghost"
+        className="absolute -top-0 mt-16 right-0 mr-5"
+        onClick={open}
+      >
+        {children}
+      </Button>
       <AddUserDialog {...{ isOpen, onClose }} />
     </>
   );

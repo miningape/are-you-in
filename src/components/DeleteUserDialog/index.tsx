@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 interface DeleteUserDialogProps {
   isOpen: boolean;
-  name: string | null;
+  name?: string;
   userId: string;
   onClose: () => void;
 }
@@ -140,86 +140,151 @@ export function DeleteUserDialog({
   );
 }
 
-/*
- 5 - 10%
- 4 - 22.5%
- 3 - 22.5%
- 2 - 22.5%
- 1 - 22.5%
- rest - 90% / 4
- 
- no repetitions after 2 in a row
- no repeated overall
+// /*
+//  5 - 10%
+//  4 - 22.5%
+//  3 - 22.5%
+//  2 - 22.5%
+//  1 - 22.5%
+//  rest - 90% / 4
 
-*/
+//  no repetitions after 2 in a row
+//  no repeated overall
 
-function getRandomFloat(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
+// */
 
-const getRandom = () => getRandomFloat(0, 100);
+// function getRandomFloat(min: number, max: number) {
+//   return Math.random() * (max - min) + min;
+// }
 
-const PROBABILITY_ARRAY = [22.5, 22.5, 22.5, 22.5, 10];
+// const getRandom = () => getRandomFloat(0, 100);
 
-function verifyProbabilityList(probabilityList: number[]): boolean {
-  return probabilityList.reduce((acc, cur) => acc + cur, 0) == 100;
-}
+// const PROBABILITY_ARRAY = [22.5, 22.5, 22.5, 22.5, 10];
 
-function removeIndexFromProbabilityList(
-  probabilityList: number[],
-  index: number
-): number[] {
-  const probabilityOfRemovedIndex = probabilityList[index];
-  const distributedProbability =
-    probabilityOfRemovedIndex / (probabilityList.length - 1);
-  const addDistributedProbability = (probability: number) =>
-    distributedProbability + probability;
+// function verifyProbabilityList(probabilityList: number[]): boolean {
+//   return probabilityList.reduce((acc, cur) => acc + cur, 0) == 100;
+// }
 
-  const newList = probabilityList
-    .slice(0, index)
-    .map(addDistributedProbability);
-  const rest = probabilityList.slice(index + 1).map(addDistributedProbability);
+// function removeIndexFromProbabilityList(
+//   probabilityList: number[],
+//   index: number
+// ): number[] {
+//   const probabilityOfRemovedIndex = probabilityList[index];
+//   const distributedProbability =
+//     probabilityOfRemovedIndex / (probabilityList.length - 1);
+//   const addDistributedProbability = (probability: number) =>
+//     distributedProbability + probability;
 
-  newList.push(0);
-  newList.push(...rest);
+//   const newList = probabilityList
+//     .slice(0, index)
+//     .map(addDistributedProbability);
+//   const rest = probabilityList.slice(index + 1).map(addDistributedProbability);
 
-  return newList;
-}
+//   newList.push(0);
+//   newList.push(...rest);
 
-function getRandomsNoRepeats(
-  probabilityList: number[],
-  length: number
-): number[] {
-  const randomList: number[] = [];
+//   return newList;
+// }
 
-  for (let i = 0; i < length; i++) {
-    if (i === 0) {
-      randomList.push(getRandomByProbability(probabilityList));
-      continue;
-    }
+// function getRandomsNoRepeats(
+//   probabilityList: number[],
+//   length: number
+// ): number[] {
+//   const randomList: number[] = [];
 
-    const lastRandomValue = randomList[randomList.length - 1];
-    const probabilityListWithoutLastValue = removeIndexFromProbabilityList(
-      probabilityList,
-      lastRandomValue
-    );
-    randomList.push(getRandomByProbability(probabilityListWithoutLastValue));
-  }
+//   for (let i = 0; i < length; i++) {
+//     if (i === 0) {
+//       randomList.push(getRandomByProbability(probabilityList));
+//       continue;
+//     }
 
-  return randomList;
-}
+//     const lastRandomValue = randomList[randomList.length - 1];
+//     const probabilityListWithoutLastValue = removeIndexFromProbabilityList(
+//       probabilityList,
+//       lastRandomValue
+//     );
+//     randomList.push(getRandomByProbability(probabilityListWithoutLastValue));
+//   }
 
-function getRandomByProbability(probabilityList: number[]): number {
-  let cast = getRandom();
+//   return randomList;
+// }
 
-  for (let index = 0; index < probabilityList.length; index++) {
-    const probability = probabilityList[index];
-    cast -= probability;
+// function getRandomByProbability(probabilityList: number[]): number {
+//   let cast = getRandom();
 
-    if (cast < 0) {
-      return index;
-    }
-  }
+//   for (let index = 0; index < probabilityList.length; index++) {
+//     const probability = probabilityList[index];
+//     cast -= probability;
 
-  throw new Error("Out of bounds error!!");
-}
+//     if (cast < 0) {
+//       return index;
+//     }
+//   }
+
+//   throw new Error("Out of bounds error!!");
+// }
+
+// interface HubspotClientsQuery {
+//   @@Partial(AllowAnythingExtra);
+
+//   name: string
+// }
+
+// effect PingSlack(slack: @SlackClient)(text: string) {
+//   slack.sendMessage("format.form", JSON{
+//     text,
+//   })
+// }
+
+// error HubspotAuthError {
+//   // message is a property all errors have
+//   message: "Hubspot authentication is faulty"
+//   severity: Severity.Low
+
+//   sideEffect: effect (auth: @HubspotAuth) {
+//     PingSlack(this.message)
+//     auth.setDirty();
+//   }
+// }
+
+// auth HubspotAuthTemplate {
+//   type: AuthType.API_KEY
+
+//   @@ComposeOnly
+//   compose API_KEY: string
+
+//   onRequest: {
+//     http: effect()(httpRequest: HttpRequest) {
+//       httpRequest.headers.authorization = 'Bearer ${API_KEY}'
+//     }
+//   }
+// }
+
+// auth HubspotAuth {
+//   @@HubspotAuthTemplate
+
+//   API_KEY: $ENV.HUBSPOT_API_KEY
+// }
+
+// contract HubspotClient {
+//   auth: @HubspotAuth,
+
+//   query: {
+//     type: @http,
+//     responseType: @HubspotClients,
+//     requestUrl: '/clients',
+//     responseMapping: {
+//       status: {
+//         200: @OK(passthrough),
+//         401: @Error(HubspotAuthError)
+//       }
+//     }
+//   },
+
+//   ownership: {
+//     style: @pull,
+//     owner: @foreign("https://docs.hubspot.com/clients")
+//   },
+// }
+
+// // select * from HubspotClient
