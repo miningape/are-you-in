@@ -23,6 +23,7 @@ export default async function Overview() {
       },
     },
     include: {
+      authorization: true,
       registrations: {
         where: {
           day: new Date(),
@@ -66,7 +67,7 @@ export default async function Overview() {
               <div>
                 {user.picture_url ?? (
                   <ColorAvatar
-                    text={user.name
+                    text={(user.name ?? user.authorization?.email ?? "Unknown")
                       .split(" ")
                       .map((word) => word[0])
                       .join("")

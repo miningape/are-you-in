@@ -1,32 +1,11 @@
 import "../globals.css";
 
 import { Form } from "./Form";
-import { getSession } from "@auth0/nextjs-auth0";
 import { redirect } from "next/navigation";
-import { prisma } from "@/db";
-import { UserClaims } from "../UserClaims";
+import { readAuth } from "../(complete_profile)/readAuth";
 
 export default async function Home() {
-  const session = await getSession();
-
-  const res = UserClaims.safeParse(session?.user);
-  if (!res.success) {
-    redirect("/api/auth/logout");
-  }
-
-  const auth = await prisma.userAuthorization.findUnique({
-    where: {
-      email: res.data.email,
-    },
-    include: {
-      user: {
-        include: {
-          company: true,
-        },
-      },
-    },
-  });
-
+  const auth = await readAuth();
   if (auth === null) {
     redirect("/api/auth/logout");
   }

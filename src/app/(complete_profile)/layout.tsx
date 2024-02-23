@@ -1,13 +1,13 @@
+import "../globals.css";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
-import { getSession } from "@auth0/nextjs-auth0";
 import { redirect } from "next/navigation";
-import { prisma } from "@/db";
 import { AuthProvider } from "./AuthProvider";
-import { UserClaims } from "../UserClaims";
 import { readAuth } from "./readAuth";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,11 +28,7 @@ export default async function RootLayout({
 
   return (
     <UserProvider>
-      <AuthProvider auth={auth}>
-        <html lang="en">
-          <body className={inter.className}>{children}</body>
-        </html>
-      </AuthProvider>
+      <AuthProvider auth={auth}>{children}</AuthProvider>
     </UserProvider>
   );
 }

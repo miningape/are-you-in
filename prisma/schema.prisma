@@ -24,8 +24,7 @@ model User {
 
     authorization UserAuthorization?
 
-    username      String
-    name          String
+    name          String?
     picture_url   String?
     registrations Registration[]
 

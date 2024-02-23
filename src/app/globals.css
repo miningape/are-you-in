@@ -4,6 +4,6 @@
 
 @layer base {
   html {
-    @apply bg-slate-800 text-zinc-200;
+    @apply bg-slate-900 text-zinc-200;
   }
 }

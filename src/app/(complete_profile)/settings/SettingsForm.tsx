@@ -5,6 +5,7 @@ import { UserFromAuth, useAuthContext } from "../AuthProvider";
 import { UpdateCompanyDto, updateCompany } from "@/app/setup/updateCompany";
 import { revalidateClientPath } from "../revalidateClientPath";
 import { GrLinkNext } from "react-icons/gr";
+import { Input } from "@nextui-org/react";
 
 function pickPartial<V, T extends keyof V>(pick: T[], from: V) {
   return pick.reduce((acc, field) => {
@@ -59,45 +60,41 @@ export function SettingsForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex">
-      <div className="flex flex-col mt-10 w-[50dvw] divide-y">
-        <input
-          className="rounded px-2 py-1 my-5 outline-slate-800 text-slate-800 "
+      <div className="flex flex-col mt-10 w-[50dvw]">
+        <Input
+          label="Company Name"
+          className=" px-2 py-1 my-1"
           {...register("companyName", {
             required: "Company Name is Required",
             minLength: 1,
-            value: auth.user.company.name || "",
+            value: auth.user.company.name || undefined,
           })}
-          placeholder="Company Name"
+          defaultValue={auth.user.company.name || undefined}
         />
 
-        <div className="flex justify-between py-5 w-full">
-          <span className=" pr-2 py-1">Notify at: </span>
-          <input
-            type="time"
-            className="rounded px-2 py-1 outline-slate-800 text-slate-800"
-            defaultValue={"09:00"}
-            {...register("pushNotificationsAt", {
-              required: "Notify At Time is Required",
-              minLength: 5,
-              maxLength: 5,
-              value: settings.push_notifications_at,
-            })}
-          />
-        </div>
+        <Input
+          label="Notify At"
+          type="time"
+          className="px-2 py-1 my-1"
+          defaultValue={settings.push_notifications_at}
+          {...register("pushNotificationsAt", {
+            required: "Notify At Time is Required",
+            minLength: 5,
+            maxLength: 5,
+          })}
+        />
 
-        <div className="flex justify-between py-5 w-full">
-          <span className=" pr-2 py-1">Auto-deny at: </span>
-          <input
-            type="time"
-            className="rounded px-2 py-1 outline-slate-800 text-slate-800"
-            {...register("autoDenyAt", {
-              required: "Auto-deny At Time is Required",
-              minLength: 5,
-              maxLength: 5,
-              value: settings.auto_deny_at,
-            })}
-          />
-        </div>
+        <Input
+          label="Auto-deny At"
+          type="time"
+          className="px-2 py-1 my-1"
+          defaultValue={settings.auto_deny_at}
+          {...register("autoDenyAt", {
+            required: "Auto-deny At Time is Required",
+            minLength: 5,
+            maxLength: 5,
+          })}
+        />
 
         <div className="w-full pt-4">
           <button type="submit" className="float-right">

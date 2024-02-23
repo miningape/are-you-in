@@ -64,7 +64,7 @@ export default function Home() {
               "hover:cursor-pointer p-2 rounded-xl border-2 " +
               (auth.user.registrations[0]?.status === "In"
                 ? "border-slate-200"
-                : "border-slate-800 hover:border-slate-400")
+                : "border-slate-900 hover:border-slate-400")
             }
             onClick={() => updateStatus(true)}
           >
@@ -75,7 +75,7 @@ export default function Home() {
               "hover:cursor-pointer p-2 rounded-xl border-2 " +
               (auth.user.registrations[0]?.status === "Out"
                 ? "border-slate-200"
-                : "border-slate-800 hover:border-slate-400")
+                : "border-slate-900 hover:border-slate-400")
             }
             onClick={() => updateStatus(false)}
           >

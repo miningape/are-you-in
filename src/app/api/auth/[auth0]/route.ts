@@ -1,15 +1,5 @@
-import {
-  AppRouteHandlerFnContext,
-  Session,
-  handleAuth,
-  handleCallback,
-  handleLogin,
-} from "@auth0/nextjs-auth0";
-import { PrismaClient } from "@prisma/client";
-import { create } from "domain";
-import { redirect } from "next/navigation";
+import { Session, handleAuth, handleCallback } from "@auth0/nextjs-auth0";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import { prisma } from "@/db";
 import { UserClaims } from "@/app/UserClaims";
 
@@ -28,7 +18,6 @@ export const GET = handleAuth({
           user: {
             create: {
               name: user.given_name + " " + user.family_name,
-              username: user.nickname,
               company: {
                 create: {
                   settings: {
