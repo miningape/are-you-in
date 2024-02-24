@@ -44,7 +44,7 @@ export default function Home() {
         {auth.user.company.name} <FaGear className="inline pb-1 text-3xl" />
       </Link>
       <Link href="/overview">
-        <span className="absolute top-0 right-0 m-5 w-20 h-20 text-5xl font-extralight">
+        <span className="absolute top-0 right-0 m-5 w-20 h-20 text-5xl font-extralight hover:text-slate-400">
           &gt;
         </span>
       </Link>

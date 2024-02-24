@@ -21,7 +21,7 @@ interface UserTableProps {
 
 export function UserTable({ children: users }: UserTableProps) {
   return (
-    <Table>
+    <Table className="max-h-[44rem]">
       <TableHeader>
         <TableColumn>Name</TableColumn>
         <TableColumn>Role</TableColumn>

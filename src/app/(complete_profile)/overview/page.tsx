@@ -39,7 +39,7 @@ export default async function Overview() {
   return (
     <>
       <Link href="/">
-        <span className="absolute top-0 left-0 m-5 w-20 h-20 text-5xl font-extralight">
+        <span className="absolute top-0 left-0 m-5 w-20 h-20 text-5xl font-extralight hover:text-slate-400">
           &lt;
         </span>
       </Link>
@@ -49,13 +49,6 @@ export default async function Overview() {
       >
         {auth?.user.company.name} <FaGear className="inline pb-1 text-3xl" />
       </Link>
-      <a
-        className="absolute bottom-0 left-0 m-5 hover:cursor-pointer hover:text-slate-400"
-        href="/api/auth/logout"
-      >
-        <CiLogout className="inline text-3xl pb-1" />
-        <span className="ml-2 text-xl">{auth?.user.name}</span>
-      </a>
 
       <div className="flex  h-dvh mx-5  justify-center">
         <div className="flex-col my-auto">

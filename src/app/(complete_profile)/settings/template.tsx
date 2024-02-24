@@ -16,7 +16,7 @@ function SettingsNavTitle({
   const path = usePathname();
 
   return (
-    <Link href={href}>
+    <Link href={href} className="hover:text-slate-400">
       <span className={path === href ? "underline" : ""}>{children}</span>
     </Link>
   );
@@ -36,7 +36,7 @@ export default function Template({
 
   return (
     <div className="flex flex-col m-5">
-      <Link href="/" className="text-3xl mb-7">
+      <Link href="/" className="text-3xl mb-7 hover:text-slate-400">
         <span>{auth.user.company.name}</span>
       </Link>
       <div className="flex flex-row text-xl gap-5 ml-10">
