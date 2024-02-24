@@ -46,7 +46,7 @@ export default function Template({
           {auth.user.name ?? auth.email ?? "Myself"}
         </SettingsNavTitle>
       </div>
-      <div className="ml-10">{children}</div>
+      <div className="mt-5">{children}</div>
     </div>
   );
 }

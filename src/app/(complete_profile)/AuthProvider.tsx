@@ -31,7 +31,7 @@ export function AuthProvider({
   );
 }
 
-export const useAuthContext = () => {
+export function useAuthContext() {
   const auth = useContext(UserAuthContext);
   const { push } = useRouter();
 
@@ -42,4 +42,4 @@ export const useAuthContext = () => {
   }, []);
 
   return auth!;
-};
+}

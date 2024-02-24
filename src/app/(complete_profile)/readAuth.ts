@@ -13,7 +13,7 @@ export async function readAuth() {
     redirect("/api/auth/logout");
   }
 
-  const auth = prisma.userAuthorization.findUnique({
+  const auth = await prisma.userAuthorization.findUnique({
     where: {
       email: res.data.email,
     },

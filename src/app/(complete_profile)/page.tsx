@@ -36,13 +36,6 @@ export default function Home() {
 
   return (
     <>
-      <a
-        className="absolute bottom-0 left-0 m-5 hover:cursor-pointer hover:text-slate-400"
-        href="/api/auth/logout"
-      >
-        <CiLogout className="inline text-3xl pb-1" />
-        <span className="ml-2 text-xl">{auth.user.name}</span>
-      </a>
       <CurrentTime className="absolute top-0 left-0 m-5 pt-3 text-lg font-mono" />
       <Link
         className="absolute bottom-0 right-0 m-5 text-xl hover:text-slate-400"

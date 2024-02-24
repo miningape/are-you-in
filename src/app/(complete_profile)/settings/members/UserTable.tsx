@@ -21,7 +21,7 @@ interface UserTableProps {
 
 export function UserTable({ children: users }: UserTableProps) {
   return (
-    <Table className="mt-5">
+    <Table>
       <TableHeader>
         <TableColumn>Name</TableColumn>
         <TableColumn>Role</TableColumn>

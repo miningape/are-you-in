@@ -34,3 +34,45 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# todo
+
+## MVP
+
+- [x] Are you in?
+  - [x] Are you in today?
+  - [x] Overview
+- [x] Workspace settings
+- [x] Members settings
+- [x] User settings
+- [ ] Invite flow
+  - [x] Create auth entry
+  - [x] Invite user modal
+  - [ ] Send invite email
+  - [ ] Set user name / role in modal
+- [ ] Make today view nicer
+- [ ] Auto-deny at
+- [ ] Mobile
+  - [ ] Test / Update all components to be mobile friendly
+  - [ ] PWA integration
+  - [ ] Push notifications
+- [ ] Verify /setup after nextui introduction
+- [ ] Deploy!
+  - [ ] Github Repo
+  - [ ] Vercel
+    - [ ] Postgres
+    - [ ] App Hosting / Link to repo
+  - [ ] Configure auth0
+  - [ ] Domain
+
+## V1
+
+- [ ] Integrations
+  - [ ] Slack
+    - [ ] Daily message
+    - [ ] Report from app
+  - [ ] Teams
+    - [ ] Daily message
+    - [ ] Report from app
+- [ ] Upload photos
+- [ ] Metrics and graphs
