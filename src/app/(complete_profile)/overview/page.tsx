@@ -4,6 +4,7 @@ import { readAuth } from "../readAuth";
 import { prisma } from "@/db";
 import { FaGear } from "react-icons/fa6";
 import { CiLogout } from "react-icons/ci";
+import { TodayStatusTable } from "./TodayStatusTable";
 
 function ColorAvatar({ text }: { text: string }) {
   return (
@@ -50,30 +51,11 @@ export default async function Overview() {
         {auth?.user.company.name} <FaGear className="inline pb-1 text-3xl" />
       </Link>
 
-      <div className="flex  h-dvh mx-5  justify-center">
-        <div className="flex-col my-auto">
-          {/*eslint-disable-next-line react/no-unescaped-entities*/}
-          <div className="m-5 text-3xl">Here's who is in today</div>
-
-          {users.map((user) => (
-            <div key={user.id} className="flex justify-between pb-4">
-              <div>
-                {user.picture_url ?? (
-                  <ColorAvatar
-                    text={(user.name ?? user.authorization?.email ?? "Unknown")
-                      .split(" ")
-                      .map((word) => word[0])
-                      .join("")
-                      .slice(0, 2)
-                      .toUpperCase()}
-                  />
-                )}
-                <span className="text-right ml-1">{user.name}</span>
-              </div>
-
-              <div>{user.registrations[0]?.status ?? "Not registered"}</div>
-            </div>
-          ))}
+      <div className="flex flex-col h-dvh mx-5 justify-center">
+        {/*eslint-disable-next-line react/no-unescaped-entities*/}
+        <div className="m-5 mx-auto text-3xl">Here's who's in today</div>
+        <div className="mx-auto md:w-3/4 md:h-3/4 overflow-scroll">
+          <TodayStatusTable users={users} />
         </div>
       </div>
     </>

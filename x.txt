@@ -1,0 +1,56 @@
+let AppConfig = struct {
+    port: int,
+    auth0: {
+        accessKey: string
+    }
+};
+
+let config = file('config.yaml').map(File::yaml<AppConfig>());
+
+let injector = Injector();
+
+injector.Register(TokenValidator) Auth0TokenValidator {
+    access_key: config.auth0.accessKey,
+};
+
+@injector.Inject 
+let validateToken = 
+    (validator: TokenValidator) =>
+        (token: string | null) => 
+            token == null ? false : validator.isValid(token)
+
+let app = Server {
+    port: config.port
+};
+
+Register(app) 
+    Route('/') () => "Hello, World!"
+
+app
+    .register(
+        Before(enrichUser) Pipe('/*') (request) =>
+            match (
+                match request.headers.authorization on
+                    | 'Bearer {token}' |> token
+                    | _ |> null)
+                    |> validateToken.inject()
+            on 
+                | true |> Ok(request)
+                | Error(_) |> AuthenticationError
+    )
+    .register(Route('/') () => "Hello, World!");
+    
+
+config
+    .map(
+        () => app.start()
+            .then(=>log("started"))
+            .catch(reportToSentry)
+    )
+    .else(() => throw Error('No config'));
+
+
+
+
+
+

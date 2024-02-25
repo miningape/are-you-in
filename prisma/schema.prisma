@@ -65,9 +65,15 @@ model Registration {
     user    User   @relation(fields: [user_id], references: [id])
     user_id String
 
-    day        DateTime           @default(now()) @db.Date
     created_at DateTime           @default(now())
     status     RegistrationStatus
 
     @@unique([user_id, created_at])
+}
+
+model ServerToken {
+    id String @id @default(uuid())
+
+    token      String
+    created_at DateTime @default(now())
 }
