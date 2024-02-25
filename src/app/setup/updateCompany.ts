@@ -8,6 +8,7 @@ export interface UpdateCompanyDto {
   companyName: string;
   pushNotificationsAt: string;
   autoDenyAt: string;
+  timezone: string;
 }
 
 export async function updateCompany(
@@ -24,6 +25,7 @@ export async function updateCompany(
         update: {
           auto_deny_at: updateCompanyDto.autoDenyAt,
           push_notifications_at: updateCompanyDto.pushNotificationsAt,
+          timezone: updateCompanyDto.timezone,
         },
       },
     },

@@ -4,9 +4,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuthContext } from "../AuthProvider";
 import { UpdateCompanyDto, updateCompany } from "@/app/setup/updateCompany";
 import { revalidateClientPath } from "../revalidateClientPath";
-import { Input } from "@nextui-org/react";
+import { Dropdown, Input, Select, SelectItem } from "@nextui-org/react";
 import { pickDirtyFields } from "@/util/pickDirtyFields";
 import { hasDifferentValuesFrom } from "@/util/differentValuesFrom";
+import { useMemo } from "react";
+import { useTimezones } from "@/hooks/useTimezones";
 
 export function SettingsForm() {
   const auth = useAuthContext();
@@ -32,6 +34,8 @@ export function SettingsForm() {
 
     await revalidateClientPath("/settings");
   };
+
+  const timezones = useTimezones();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-1/2 mx-auto">
@@ -66,6 +70,16 @@ export function SettingsForm() {
             maxLength: 5,
           })}
         />
+
+        <Select
+          label="Timezone"
+          defaultSelectedKeys={[settings.timezone]}
+          {...register("timezone", { required: "Timezone is required" })}
+        >
+          {timezones.map((timezone) => (
+            <SelectItem key={timezone}>{timezone}</SelectItem>
+          ))}
+        </Select>
 
         <div className="w-full pt-4">
           <button type="submit" className="float-right">

@@ -3,6 +3,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { GrLinkNext } from "react-icons/gr";
 import { UpdateCompanyDto, updateCompany } from "./updateCompany";
+import { Select, SelectItem } from "@nextui-org/react";
+import { useTimezones } from "@/hooks/useTimezones";
 
 export function Form({ companyId }: { companyId: string }) {
   const {
@@ -12,6 +14,8 @@ export function Form({ companyId }: { companyId: string }) {
   } = useForm<UpdateCompanyDto>();
   const onSubmit: SubmitHandler<UpdateCompanyDto> = (dto) =>
     updateCompany(companyId, dto);
+
+  const timezones = useTimezones();
 
   return (
     <div className="flex bg-zinc-200 w-dvw text-slate-800">
@@ -59,6 +63,16 @@ export function Form({ companyId }: { companyId: string }) {
                 })}
               />
             </div>
+
+            <Select
+              label="Timezone"
+              defaultSelectedKeys={["GMT"]}
+              {...register("timezone", { required: "Timezone is required" })}
+            >
+              {timezones.map((timezone) => (
+                <SelectItem key={timezone}>{timezone}</SelectItem>
+              ))}
+            </Select>
 
             <div className="w-full">
               <button type="submit" className="float-left">
