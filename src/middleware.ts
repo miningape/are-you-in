@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export default async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.includes("/api/auth/")) {
+  if (
+    request.nextUrl.pathname.startsWith("/api/auth/") ||
+    request.nextUrl.pathname === "/api/jobs/auto-deny"
+  ) {
     return NextResponse.next();
   }
 

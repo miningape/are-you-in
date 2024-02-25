@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/db";
+import { revalidatePath } from "next/cache";
 
 export async function deleteUser(userId: string) {
   const user = await prisma.user.update({
@@ -22,4 +23,6 @@ export async function deleteUser(userId: string) {
       },
     });
   }
+
+  revalidatePath("/");
 }

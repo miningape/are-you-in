@@ -21,7 +21,6 @@ interface TodayStatusTableProps {
 }
 
 export function TodayStatusTable({ users, className }: TodayStatusTableProps) {
-  console.log(users);
   return (
     <Table hideHeader {...{ className }}>
       <TableHeader>

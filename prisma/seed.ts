@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
-import dayjs from "dayjs";
 
 const prisma = new PrismaClient();
 const coreEmail = "miningape@gmail.com";
@@ -24,19 +23,31 @@ async function main() {
   });
 
   await Promise.all(
-    auth.user.company.users.map((user, i) =>
-      prisma.registration.create({
+    new Array(10).fill(undefined).map(() =>
+      prisma.user.create({
         data: {
-          status: i % 2 === 0 ? "In" : "Out",
-          user: {
-            connect: {
-              id: user.id,
-            },
-          },
+          name: faker.person.fullName(),
+          flavour: faker.person.jobArea(),
+          company: { connect: { id: auth.user.company.id } },
         },
       })
     )
   );
+
+  // await Promise.all(
+  //   auth.user.company.users.map((user, i) =>
+  //     prisma.registration.create({
+  //       data: {
+  //         status: i % 2 === 0 ? "In" : "Out",
+  //         user: {
+  //           connect: {
+  //             id: user.id,
+  //           },
+  //         },
+  //       },
+  //     })
+  //   )
+  // );
 
   //   await Promise.all(
   //     new Array(10).fill(undefined).map(() =>

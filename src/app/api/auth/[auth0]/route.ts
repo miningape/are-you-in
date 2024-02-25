@@ -24,6 +24,7 @@ export const GET = handleAuth({
                     create: {
                       auto_deny_at: "9:00",
                       push_notifications_at: "10:00",
+                      timezone: "UTC",
                     },
                   },
                 },

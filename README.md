@@ -50,8 +50,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
   - [x] Invite user modal
   - [ ] Send invite email
   - [ ] Set user name / role in modal
-- [ ] Make today view nicer
+- [x] Make today view nicer
 - [ ] Auto-deny at
+  - [ ] Authentication
+  - [ ] Set status
 - [ ] Mobile
   - [ ] Test / Update all components to be mobile friendly
   - [ ] PWA integration
@@ -67,6 +69,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## V1
 
+- [ ] Sorting and improving user experience for larger orgs
+  - [ ] Departments / Titles / Teams
 - [ ] Integrations
   - [ ] Slack
     - [ ] Daily message
