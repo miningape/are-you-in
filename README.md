@@ -45,20 +45,20 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - [x] Workspace settings
 - [x] Members settings
 - [x] User settings
-- [ ] Invite flow
-  - [x] Create auth entry
-  - [x] Invite user modal
-  - [ ] Send invite email
-  - [ ] Set user name / role in modal
 - [x] Make today view nicer
-- [ ] Auto-deny at
-  - [ ] Authentication
-  - [ ] Set status
+- [x] Auto-deny at
+  - [x] Authentication
+  - [x] Set status
 - [ ] Mobile
   - [ ] Test / Update all components to be mobile friendly
   - [ ] PWA integration
   - [ ] Push notifications
 - [ ] Verify /setup after nextui introduction
+- [ ] Invite flow
+  - [x] Create auth entry
+  - [x] Invite user modal
+  - [ ] Send invite email
+  - [ ] Set user name / role in modal
 - [ ] Deploy!
   - [ ] Github Repo
   - [ ] Vercel
