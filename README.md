@@ -60,7 +60,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
   - [ ] Send invite email
   - [ ] Set user name / role in modal
 - [ ] Deploy!
-  - [ ] Github Repo
+  - [x] Github Repo
   - [ ] Vercel
     - [ ] Postgres
     - [ ] App Hosting / Link to repo
