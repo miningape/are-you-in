@@ -11,7 +11,7 @@ export default async function middleware(request: NextRequest) {
   const token = request.cookies.get("appSession");
   if (token === undefined) {
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`
+      `${process.env.AUTH0_BASE_URL}/api/auth/login`
     );
   }
 

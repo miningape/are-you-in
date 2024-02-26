@@ -48,3 +48,45 @@ config
             .catch(reportToSentry)
     )
     .else(() => throw Error('No config'));
+
+table User {
+    [@id: uuid];
+
+    name: string;
+    age: integer;
+
+    last_online: DateTime?;
+    number_logins: integer;
+
+    tickets: Ticket[];
+};
+
+create {
+    table Ticket {
+        @id: uuid;
+
+        reporter: User;
+    };
+};
+
+
+update {
+    new_user = new User {
+        name: 'Kyle',
+        age: 22,
+        last_online: null,
+        number_logins: 0
+    };
+
+    push Ticket {
+        reporter: connect new_user
+    };      
+};
+
+
+
+function UserTickets() {
+    User join Ticket
+};
+
+api /dump UserTickets;
