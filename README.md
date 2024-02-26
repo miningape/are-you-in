@@ -1,13 +1,15 @@
 # RUN / Are You In?
 
-`RUN` is a phonetic acronymn based on the phrase "Are You In?" in reference to the question commonly asked by co-workers to see if they should be in the office today.
+`RUN` is a phonetic acronymn based on the question "Are You In?", which is commonly asked by co-workers to see if they should be in the office today.
+
+This service is designed to provide a centralised answer to the question "Are you in?" allowing co-workers and managers to see who else is in the office today. The app is built as a [PWA](https://web.dev/explore/progressive-web-apps), allowing users to quickly and easily set their status for the day from their mobile devices, as well as providing push notifications. There will be automated slack and teams integrations, allowing user's to set and view statuses, as well as providing daily updates to shared channels. We plan on providing metrics and analytics on a team/employee/office level, allowing managers to gain a comprehensive overview of the usage of their coworking spaces.
 
 ## Running locally
 
 You will need:
 
-1. Auth0 Account (https://auth0.com/)[https://auth0.com/]
-2. Postgres database (Set up a local database)[https://www.sqlshack.com/setting-up-a-postgresql-database-on-mac/]
+1. Auth0 Account ([https://auth0.com/](https://auth0.com/))
+2. Postgres database ([Set up a local database](https://www.sqlshack.com/setting-up-a-postgresql-database-on-mac/))
 
 Then copy the file `.env.example` and rename it to `.env.local`. Fill in the entries for the Auth0 credentials and the database/postgres URL.
 
