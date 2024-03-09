@@ -51,10 +51,10 @@ pnpm dev            # Start the server on `http://localhost:3000`
   - [ ] Set user name / role in modal
 - [ ] Deploy!
   - [x] Github Repo
-  - [ ] Vercel
-    - [ ] Postgres
-    - [ ] App Hosting / Link to repo
-  - [ ] Configure auth0
+  - [x] Vercel
+    - [x] Postgres
+    - [x] App Hosting / Link to repo
+  - [x] Configure auth0
   - [ ] Domain
 
 ## V1

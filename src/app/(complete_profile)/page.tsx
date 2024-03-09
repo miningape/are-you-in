@@ -1,15 +1,12 @@
 "use client";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { useAuthContext } from "./AuthProvider";
-import { FaBackward, FaGear } from "react-icons/fa6";
+import { FaGear } from "react-icons/fa6";
 import dayjs from "dayjs";
-import { GoGear } from "react-icons/go";
 import { HTMLAttributes, useEffect, useState } from "react";
-import { CiLogout } from "react-icons/ci";
 import Link from "next/link";
 import { setTodaysStatus } from "./setTodaysStatus";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 function CurrentTime({ ...rest }: {} & HTMLAttributes<HTMLSpanElement>) {
   const [time, setTime] = useState(dayjs());
