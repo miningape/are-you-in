@@ -9,6 +9,7 @@ import { HTMLAttributes, useEffect, useState } from "react";
 import { CiLogout } from "react-icons/ci";
 import Link from "next/link";
 import { setTodaysStatus } from "./setTodaysStatus";
+import { useRouter } from "next/router";
 
 function CurrentTime({ ...rest }: {} & HTMLAttributes<HTMLSpanElement>) {
   const [time, setTime] = useState(dayjs());
@@ -30,9 +31,17 @@ function CurrentTime({ ...rest }: {} & HTMLAttributes<HTMLSpanElement>) {
 
 export default function Home() {
   const auth = useAuthContext();
-  const updateStatus = (status: boolean) =>
-    (auth.user.registrations[0]?.status === "In") !== status && // only update if there is a difference
+  const { push } = useRouter();
+
+  const updateStatus = (status: boolean) => {
+    if ((auth.user.registrations[0]?.status === "In") === status) {
+      // only update if there is a difference
+      return;
+    }
+
     setTodaysStatus(auth.user_id, status);
+    push("/overview");
+  };
 
   return (
     <>
