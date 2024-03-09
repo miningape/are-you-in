@@ -7,6 +7,8 @@ import { HTMLAttributes, useEffect, useState } from "react";
 import Link from "next/link";
 import { setTodaysStatus } from "./setTodaysStatus";
 import { useRouter } from "next/navigation";
+import { Spinner } from "@nextui-org/react";
+import { delay } from "@/util/delay";
 
 function CurrentTime({ ...rest }: {} & HTMLAttributes<HTMLSpanElement>) {
   const [time, setTime] = useState(dayjs());
@@ -29,6 +31,7 @@ function CurrentTime({ ...rest }: {} & HTMLAttributes<HTMLSpanElement>) {
 export default function Home() {
   const auth = useAuthContext();
   const { push } = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const updateStatus = (status: boolean) => {
     if ((auth.user.registrations[0]?.status === "In") === status) {
@@ -36,12 +39,25 @@ export default function Home() {
       return;
     }
 
+    setLoading(true);
     setTodaysStatus(auth.user_id, status);
     push("/overview");
   };
 
   return (
     <>
+      {loading && (
+        <div
+          className="fixed top-0 left-0 w-full h-full bg-background opacity-50 flex justify-center z-50"
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+          aria-disabled
+        >
+          <Spinner color="primary" size="lg" />
+        </div>
+      )}
+
       <CurrentTime className="absolute top-0 left-0 m-5 pt-3 text-lg font-mono" />
       <Link
         className="absolute bottom-0 right-0 m-5 text-xl hover:text-slate-400"

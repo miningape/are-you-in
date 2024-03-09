@@ -40,7 +40,7 @@ pnpm dev            # Start the server on `http://localhost:3000`
   - [x] Authentication
   - [x] Set status
 - [ ] Mobile
-  - [ ] Test / Update all components to be mobile friendly
+  - [x] Test / Update all components to be mobile friendly
   - [ ] PWA integration
   - [ ] Push notifications
 - [ ] Verify /setup after nextui introduction
