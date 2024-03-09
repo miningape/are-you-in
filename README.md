@@ -65,8 +65,15 @@ pnpm dev            # Start the server on `http://localhost:3000`
   - [ ] Slack
     - [ ] Daily message
     - [ ] Report from app
+    - [ ] Set status
+    - [ ] Backlink
   - [ ] Teams
     - [ ] Daily message
     - [ ] Report from app
+    - [ ] Set status
+    - [ ] Backlink
 - [ ] Upload photos
 - [ ] Metrics and graphs
+- [ ] Mass invite users
+  - [ ] By email
+  - [ ] By domain

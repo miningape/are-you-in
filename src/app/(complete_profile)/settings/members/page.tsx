@@ -27,7 +27,7 @@ export default async function Members() {
 
   return (
     <>
-      <AddUserDialogButton />
+      <AddUserDialogButton className="absolute -top-0 mt-5 md:mt-16 right-0 mr-3 md:mr-5" />
       <UserTable>{users}</UserTable>
     </>
   );

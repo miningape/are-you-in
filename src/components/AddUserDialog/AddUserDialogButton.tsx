@@ -6,8 +6,10 @@ import React, { useState } from "react";
 
 export function AddUserDialogButton({
   children = <>Add a new member</>,
+  className = "",
 }: {
   children?: React.JSX.Element;
+  className?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,7 +26,7 @@ export function AddUserDialogButton({
       <Button
         color="warning"
         variant="ghost"
-        className="absolute -top-0 mt-16 right-0 mr-5"
+        className={className}
         onClick={open}
       >
         {children}
