@@ -16,6 +16,7 @@
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "5.7.1",
     "@types/jsonwebtoken": "^9.0.5",
+    "@vercel/speed-insights": "^1.0.10",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
     "framer-motion": "^11.0.5",

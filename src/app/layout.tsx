@@ -1,6 +1,6 @@
 import { Toaster } from "react-hot-toast";
-import { NextUIProvider } from "@nextui-org/react";
 import { NextUIClientProvider } from "./NextUIClientProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function RootLayout({
   children,
@@ -13,6 +13,7 @@ export default function RootLayout({
         <NextUIClientProvider>
           {children}
           <Toaster />
+          <SpeedInsights />
         </NextUIClientProvider>
       </body>
     </html>
