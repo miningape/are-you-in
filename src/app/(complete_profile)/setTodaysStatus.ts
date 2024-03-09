@@ -14,6 +14,5 @@ export async function setTodaysStatus(userId: string, isInToday: boolean) {
     },
   });
 
-  revalidatePath("/");
   redirect("/overview");
 }
