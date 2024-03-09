@@ -22,7 +22,6 @@ export function UserClient() {
   } = useForm<UserUpdateForm>();
 
   const onSubmit = handleSubmit(async (form) => {
-    console.log(form);
     await pickDirtyFields(dirtyFields, form)
       .filter(
         hasDifferentValuesFrom({

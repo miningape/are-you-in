@@ -34,8 +34,7 @@ export default function Home() {
   const { push } = useRouter();
   const { PageWideSpinner, setLoading } = usePageWideSpinner({});
 
-  const updateStatus = (status: boolean) => {
-    console.log({ auth, status });
+  const updateStatus = async (status: boolean) => {
     if (
       auth.user.registrations.length !== 0 &&
       (auth.user.registrations[0].status === "In") === status
@@ -45,7 +44,7 @@ export default function Home() {
     }
 
     setLoading(true);
-    setTodaysStatus(auth.user_id, status);
+    await setTodaysStatus(auth.user_id, status);
     push("/overview");
   };
 
