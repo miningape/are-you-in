@@ -30,6 +30,4 @@ export async function updateCompany(
       },
     },
   });
-
-  redirect("/");
 }

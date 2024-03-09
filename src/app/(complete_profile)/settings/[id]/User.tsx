@@ -9,8 +9,8 @@ import { pickDirtyFields } from "@/util/pickDirtyFields";
 import { hasDifferentValuesFrom } from "@/util/differentValuesFrom";
 
 interface UserUpdateForm {
-  name: string;
-  role: string;
+  name: string | undefined;
+  role: string | undefined;
 }
 
 export function UserClient() {
@@ -22,6 +22,7 @@ export function UserClient() {
   } = useForm<UserUpdateForm>();
 
   const onSubmit = handleSubmit(async (form) => {
+    console.log(form);
     await pickDirtyFields(dirtyFields, form)
       .filter(
         hasDifferentValuesFrom({
@@ -53,16 +54,14 @@ export function UserClient() {
           label="Name"
           defaultValue={auth.user.name ?? undefined}
           {...register("name", {
-            required: true,
+            setValueAs: (value) => (value === "" ? null : value),
           })}
         />
         <Input
           type="text"
           label="Role"
           defaultValue={auth.user.flavour ?? undefined}
-          {...register("role", {
-            required: true,
-          })}
+          {...register("role", {})}
         />
 
         <div className="w-full pt-4">

@@ -9,6 +9,7 @@ import { setTodaysStatus } from "./setTodaysStatus";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@nextui-org/react";
 import { delay } from "@/util/delay";
+import { usePageWideSpinner } from "@/hooks/usePageWideSpinner";
 
 function CurrentTime({ ...rest }: {} & HTMLAttributes<HTMLSpanElement>) {
   const [time, setTime] = useState(dayjs());
@@ -31,10 +32,14 @@ function CurrentTime({ ...rest }: {} & HTMLAttributes<HTMLSpanElement>) {
 export default function Home() {
   const auth = useAuthContext();
   const { push } = useRouter();
-  const [loading, setLoading] = useState(false);
+  const { PageWideSpinner, setLoading } = usePageWideSpinner({});
 
   const updateStatus = (status: boolean) => {
-    if ((auth.user.registrations[0]?.status === "In") === status) {
+    console.log({ auth, status });
+    if (
+      auth.user.registrations.length !== 0 &&
+      (auth.user.registrations[0].status === "In") === status
+    ) {
       // only update if there is a difference
       return;
     }
@@ -46,18 +51,7 @@ export default function Home() {
 
   return (
     <>
-      {loading && (
-        <div
-          className="fixed top-0 left-0 w-full h-full bg-background opacity-50 flex justify-center z-50"
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-          aria-disabled
-        >
-          <Spinner color="primary" size="lg" />
-        </div>
-      )}
-
+      <PageWideSpinner />
       <CurrentTime className="absolute top-0 left-0 m-5 pt-3 text-lg font-mono" />
       <Link
         className="absolute bottom-0 right-0 m-5 text-xl hover:text-slate-400"
