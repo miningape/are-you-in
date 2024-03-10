@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export default async function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname === "/static/service-worker.js") {
+    return NextResponse.next({
+      headers: {
+        "Service-Worker-Allowed": "/",
+      },
+    });
+  }
+
   if (
     request.nextUrl.pathname.startsWith("/api/auth/") ||
-    request.nextUrl.pathname === "/api/jobs/auto-deny"
+    request.nextUrl.pathname === "/api/jobs/auto-deny" ||
+    request.nextUrl.pathname.startsWith("/static/")
   ) {
     return NextResponse.next();
   }
