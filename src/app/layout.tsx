@@ -2,11 +2,12 @@ import { Toaster } from "react-hot-toast";
 import { NextUIClientProvider } from "./NextUIClientProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata, Viewport } from "next";
-
-const APP_NAME = "PWA App";
-const APP_DEFAULT_TITLE = "My Awesome PWA App";
-const APP_TITLE_TEMPLATE = "%s - PWA App";
-const APP_DESCRIPTION = "Best PWA app in the world!";
+import {
+  APP_DEFAULT_TITLE,
+  APP_DESCRIPTION,
+  APP_NAME,
+  APP_TITLE_TEMPLATE,
+} from "@/util/constants/app";
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,

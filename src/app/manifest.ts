@@ -1,9 +1,15 @@
+import {
+  APP_DEFAULT_TITLE,
+  APP_DESCRIPTION,
+  APP_NAME,
+} from "@/util/constants/app";
 import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "My awesome PWA app",
-    short_name: "PWA App",
+    name: APP_DEFAULT_TITLE,
+    description: APP_DESCRIPTION,
+    short_name: APP_NAME,
     icons: [
       {
         src: "static/images/logo_192x192.png",
