@@ -36,4 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 /prisma/seed.js
-/public/static/service-worker.js
+/public/service-worker.js
