@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export default async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname === "/static/service-worker.js") {
+  if (request.nextUrl.pathname === "/service-worker.js") {
     return NextResponse.next({
       headers: {
         "Service-Worker-Allowed": "/",
