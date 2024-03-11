@@ -4,6 +4,7 @@ const withSerwist = require("@serwist/next").default({
 
   // ! If this URL is changed also change `src/middleware.ts` such that the header `Service-Worker-Allowed: /` is sent on the response
   swUrl: "/static/service-worker.js",
+  register: false,
 });
 
 /** @type {import('next').NextConfig} */

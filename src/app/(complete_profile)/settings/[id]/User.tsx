@@ -1,12 +1,14 @@
 "use client";
 
-import { Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { useAuthContext } from "@/app/(complete_profile)/AuthProvider";
 import { useForm } from "react-hook-form";
 import { updateUser } from "./updateUser";
 import { revalidateClientPath } from "../../revalidateClientPath";
 import { pickDirtyFields } from "@/util/pickDirtyFields";
 import { hasDifferentValuesFrom } from "@/util/differentValuesFrom";
+import { useContext } from "react";
+import { useServiceWorker } from "@/app/RegisterPwa";
 
 interface UserUpdateForm {
   name: string | undefined;
@@ -15,6 +17,7 @@ interface UserUpdateForm {
 
 export function UserClient() {
   const auth = useAuthContext();
+  const serviceWorker = useServiceWorker();
   const {
     handleSubmit,
     register,
@@ -62,6 +65,17 @@ export function UserClient() {
           defaultValue={auth.user.flavour ?? undefined}
           {...register("role", {})}
         />
+
+        <Button
+          onClick={async () => {
+            const p = await serviceWorker?.pushManager.permissionState({
+              userVisibleOnly: true,
+            });
+            console.log(p);
+          }}
+        >
+          Click Me!
+        </Button>
 
         <div className="w-full pt-4">
           <button type="submit" className="float-right">

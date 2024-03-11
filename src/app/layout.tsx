@@ -8,6 +8,7 @@ import {
   APP_NAME,
   APP_TITLE_TEMPLATE,
 } from "@/util/constants/app";
+import { ServiceWorker } from "./RegisterPwa";
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
@@ -55,16 +56,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="text-default-900 bg-background">
-      <head>
-        <link
-          rel="manifest"
-          href="/manifest.webmanifest"
-          crossOrigin="use-credentials"
-        />
-      </head>
+      <head />
       <body>
         <NextUIClientProvider>
-          {children}
+          <ServiceWorker>{children}</ServiceWorker>
           <Toaster />
           <SpeedInsights />
         </NextUIClientProvider>

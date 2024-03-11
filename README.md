@@ -41,7 +41,7 @@ pnpm dev            # Start the server on `http://localhost:3000`
   - [x] Set status
 - [ ] Mobile
   - [x] Test / Update all components to be mobile friendly
-  - [ ] PWA integration
+  - [x] PWA integration
   - [ ] Push notifications
 - [x] Verify /setup after nextui introduction
 - [ ] Invite flow
@@ -59,6 +59,7 @@ pnpm dev            # Start the server on `http://localhost:3000`
 
 ## V1
 
+- [ ] Landing Page
 - [ ] Sorting and improving user experience for larger orgs
   - [ ] Departments / Titles / Teams
 - [ ] Integrations
@@ -77,3 +78,7 @@ pnpm dev            # Start the server on `http://localhost:3000`
 - [ ] Mass invite users
   - [ ] By email
   - [ ] By domain
+
+## Go-To-Market
+
+- [ ] Marketing Materials
