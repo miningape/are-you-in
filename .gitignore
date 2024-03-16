@@ -37,3 +37,4 @@ next-env.d.ts
 
 /prisma/seed.js
 /public/service-worker.js
+/cron/

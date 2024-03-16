@@ -7,8 +7,8 @@ import { updateUser } from "./updateUser";
 import { revalidateClientPath } from "../../revalidateClientPath";
 import { pickDirtyFields } from "@/util/pickDirtyFields";
 import { hasDifferentValuesFrom } from "@/util/differentValuesFrom";
-import { useContext } from "react";
 import { useServiceWorker } from "@/app/RegisterPwa";
+import { registerPushNotifications } from "./registerPushNotifications";
 
 interface UserUpdateForm {
   name: string | undefined;
@@ -67,12 +67,7 @@ export function UserClient() {
         />
 
         <Button
-          onClick={async () => {
-            const p = await serviceWorker?.pushManager.permissionState({
-              userVisibleOnly: true,
-            });
-            console.log(p);
-          }}
+          onClick={() => registerPushNotifications(auth.user.id, serviceWorker)}
         >
           Click Me!
         </Button>

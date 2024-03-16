@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 import type { Serwist } from "@serwist/window";
-import toast from "react-hot-toast";
 
 declare global {
   interface Window {
