@@ -20,6 +20,7 @@
     "@serwist/sw": "^8.4.4",
     "@serwist/window": "^8.4.4",
     "@types/jsonwebtoken": "^9.0.5",
+    "@types/web-push": "^3.6.3",
     "@vercel/speed-insights": "^1.0.10",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
@@ -33,6 +34,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.0.1",
     "react-time-picker": "^6.6.0",
+    "web-push": "^3.6.7",
     "zod": "^3.22.4"
   },
   "devDependencies": {

@@ -12,6 +12,7 @@ export default async function middleware(request: NextRequest) {
   if (
     request.nextUrl.pathname.startsWith("/api/auth/") ||
     request.nextUrl.pathname === "/api/jobs/auto-deny" ||
+    request.nextUrl.pathname === "/api/jobs/push-notifications" ||
     request.nextUrl.pathname.startsWith("/static/")
   ) {
     return NextResponse.next();
