@@ -1,19 +1,27 @@
 import { PrismaClient } from "@prisma/client";
 
+export class AuthorizationError extends Error {
+  static AUTHORIZATION_ERROR_MESSAGE = "@AUTHORIZATION_ERROR_MESSAGE";
+
+  constructor() {
+    super(AuthorizationError.AUTHORIZATION_ERROR_MESSAGE);
+  }
+}
+
 export function extractToken(headers: Headers) {
   const authorization = headers.get("Authorization");
 
   if (authorization === null) {
-    throw new Error();
+    throw new AuthorizationError();
   }
 
   if (!authorization.startsWith("Bearer ")) {
-    throw new Error();
+    throw new AuthorizationError();
   }
 
   const [, token] = authorization.split("Bearer ");
   if (token === undefined || token === "") {
-    throw new Error();
+    throw new AuthorizationError();
   }
 
   return token;
@@ -28,7 +36,7 @@ export async function assertTokenValid(prisma: PrismaClient, token: string) {
   });
 
   if (authenticated === null) {
-    throw new Error();
+    throw new AuthorizationError();
   }
 
   return prisma.$transaction(async (prisma) => {

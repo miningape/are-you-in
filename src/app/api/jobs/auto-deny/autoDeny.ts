@@ -1,16 +1,13 @@
-import { PrismaClient } from "@prisma/client";
+"use server";
+
 import dayjs, { Dayjs } from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { PrismaTransaction } from "../types";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("UTC");
-
-type PrismaTransaction = Omit<
-  PrismaClient,
-  "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends"
->;
 
 function getCompaniesToAutoDeny(prisma: PrismaTransaction) {
   return prisma.company.findMany({
