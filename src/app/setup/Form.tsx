@@ -5,12 +5,12 @@ import { GrLinkNext } from "react-icons/gr";
 import { UpdateCompanyDto, updateCompany } from "./updateCompany";
 import { Input, Select, SelectItem } from "@nextui-org/react";
 import { useTimezones } from "@/hooks/useTimezones";
-import { usePageWideSpinner } from "@/hooks/usePageWideSpinner";
+import { usePageWideSpinner } from "@/hooks/useSpinner";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export function Form({ companyId }: { companyId: string }) {
-  const { PageWideSpinner, setLoading } = usePageWideSpinner({});
+  const { Spinner, setLoading } = usePageWideSpinner({});
   const { push } = useRouter();
   const {
     register,
@@ -27,7 +27,7 @@ export function Form({ companyId }: { companyId: string }) {
 
   return (
     <>
-      <PageWideSpinner />
+      <Spinner />
       <div className="flex bg-zinc-200 w-dvw text-slate-800">
         <div className="flex bg-background w-[50dvw] h-dvh">
           <div className="m-auto text-4xl text-zinc-200">

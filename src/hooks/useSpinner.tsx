@@ -1,35 +1,52 @@
 "use client";
 
-import { Spinner, SpinnerProps } from "@nextui-org/react";
+import { Spinner as NextUiSpinner, SpinnerProps } from "@nextui-org/react";
 import clsx from "clsx";
 import React from "react";
 import { useCallback, useState } from "react";
 
-interface UsePageWideSpinnerProps {
+interface UseSpinnerProps {
   initialState?: boolean;
   spinnerProps?: SpinnerProps;
   backgroundProps?: React.HTMLAttributes<HTMLDivElement>;
 }
 
-export function usePageWideSpinner({
+export function useRelativeWideSpinner(props: UseSpinnerProps = {}) {
+  return useSpinner({
+    backgroundProps: {
+      className:
+        "absolute w-full h-full bg-background opacity-50 z-50 flex justify-center z-50",
+    },
+    ...props,
+  });
+}
+
+export function usePageWideSpinner(props: UseSpinnerProps = {}) {
+  return useSpinner({
+    backgroundProps: {
+      className:
+        "fixed top-0 left-0 w-full h-full bg-background opacity-50 flex justify-center z-50",
+    },
+    ...props,
+  });
+}
+
+export function useSpinner({
   initialState = false,
   spinnerProps = {
     color: "primary",
     size: "lg",
   },
   backgroundProps = {},
-}: UsePageWideSpinnerProps) {
+}: UseSpinnerProps) {
   const [loading, setLoading] = useState(initialState);
 
-  const PageWideSpinner = useCallback(
+  const Spinner = useCallback(
     () =>
       loading && (
         <div
           {...backgroundProps}
-          className={clsx(
-            "fixed top-0 left-0 w-full h-full bg-background opacity-50 flex justify-center z-50",
-            backgroundProps.className
-          )}
+          className={clsx(backgroundProps.className)}
           onClick={(e) => {
             e.preventDefault();
 
@@ -39,14 +56,14 @@ export function usePageWideSpinner({
           }}
           aria-disabled
         >
-          <Spinner {...spinnerProps} />
+          <NextUiSpinner {...spinnerProps} />
         </div>
       ),
     [loading, backgroundProps, spinnerProps]
   );
 
   return {
-    PageWideSpinner,
+    Spinner,
     loading,
     setLoading,
   };

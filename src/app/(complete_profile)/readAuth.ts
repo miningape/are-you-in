@@ -34,6 +34,11 @@ export async function readAuth() {
             },
             take: 1,
           },
+          push_subscriptions: {
+            where: {
+              deleted_at: null,
+            },
+          },
         },
       },
     },
