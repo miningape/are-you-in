@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 import { useAuthContext } from "@/app/(complete_profile)/AuthProvider";
 import { useForm } from "react-hook-form";
 import { updateUser } from "./updateUser";
@@ -8,7 +8,7 @@ import { revalidateClientPath } from "../../revalidateClientPath";
 import { pickDirtyFields } from "@/util/pickDirtyFields";
 import { hasDifferentValuesFrom } from "@/util/differentValuesFrom";
 import { useServiceWorker } from "@/app/RegisterPwa";
-import { registerPushNotifications } from "./registerPushNotifications";
+import { PushNotificationSwitch } from "@/components/PushNotificationSwitch";
 
 interface UserUpdateForm {
   name: string | undefined;
@@ -17,7 +17,6 @@ interface UserUpdateForm {
 
 export function UserClient() {
   const auth = useAuthContext();
-  const serviceWorker = useServiceWorker();
   const {
     handleSubmit,
     register,
@@ -66,11 +65,7 @@ export function UserClient() {
           {...register("role", {})}
         />
 
-        <Button
-          onClick={() => registerPushNotifications(auth.user.id, serviceWorker)}
-        >
-          Click Me!
-        </Button>
+        <PushNotificationSwitch />
 
         <div className="w-full pt-4">
           <button type="submit" className="float-right">

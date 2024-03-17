@@ -1,7 +1,7 @@
 "use client";
 
 import toast from "react-hot-toast";
-import { persistOrGetPushNotification as persistPushSubscription } from "./persistPushNotifications";
+import { persistOrGetPushSubscription as persistPushSubscription } from "./server-actions/persistOrGetPushSubscription";
 
 async function getPushSubscription(serviceWorker: ServiceWorkerRegistration) {
   const subscription = await serviceWorker.pushManager.getSubscription();
@@ -18,25 +18,19 @@ async function getPushSubscription(serviceWorker: ServiceWorkerRegistration) {
 
 export async function registerPushNotifications(
   userId: string,
-  serviceWorker: ServiceWorkerRegistration | undefined
+  serviceWorker: ServiceWorkerRegistration
 ) {
   try {
-    if (serviceWorker === undefined) {
-      throw new Error("Service worker not registered");
-    }
-
     const permission = await Notification.requestPermission();
     if (permission === "default" || permission === "denied") {
       throw new Error("Must allow notifications");
     }
 
     const subscription = await getPushSubscription(serviceWorker);
-    const persistedSubscription = await persistPushSubscription(
+    return persistPushSubscription(
       userId,
       JSON.parse(JSON.stringify(subscription))
     );
-
-    console.log(persistedSubscription);
   } catch (e) {
     if (e instanceof Error) {
       toast.error(`Cannot send push notifications - ${e.message}`);

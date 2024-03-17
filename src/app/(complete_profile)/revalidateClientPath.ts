@@ -8,5 +8,5 @@ export async function revalidateClientPath(
   type?: "page" | "layout"
 ) {
   revalidatePath(path, type);
-  redirect(path);
+  // redirect(path);
 }

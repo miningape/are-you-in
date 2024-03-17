@@ -3,7 +3,7 @@
 import { prisma } from "@/db";
 import { ZodPushSubscription } from "@/webpush";
 
-export async function persistOrGetPushNotification(
+export async function persistOrGetPushSubscription(
   userId: string,
   subscription: any
 ) {
