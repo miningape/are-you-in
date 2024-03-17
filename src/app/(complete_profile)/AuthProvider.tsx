@@ -2,6 +2,7 @@
 
 import {
   Company,
+  PushSubscription,
   Registration,
   Settings,
   User,
@@ -14,6 +15,7 @@ export type UserFromAuth = UserAuthorization & {
   user: User & {
     company: Company & { settings: Settings };
     registrations: Registration[];
+    push_subscriptions: PushSubscription[];
   };
 };
 
