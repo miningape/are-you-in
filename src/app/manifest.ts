@@ -11,7 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: APP_DESCRIPTION,
     short_name: APP_NAME,
     // @ts-expect-error
-    applicationServerKey: process.env.VAPID_PRIVATE_KEY,
+    applicationServerKey: process.env.NEXT_PUBLIC_VAPID_KEY,
     icons: [
       {
         src: "static/images/logo_192x192.png",
