@@ -25,6 +25,25 @@ pnpm dev            # Start the server on `http://localhost:3000`
 
 2. (Optional) After logging in, put your email into (`prisma/seed.ts`) and run the seed script `pnpm ts-node prisma/seed.ts`. This will add a bit of data to your workspace, making it easier to test.
 
+## Cron jobs
+
+Cron jobs are run on 5 minute intervals to auto-deny and push notifications based on user settings.
+
+They are currently hosted on [cron-job.org](cron-job.org).
+
+The routes are:
+
+```
+GET /api/jobs/auto-deny
+GET /api/jobs/push-notifications
+```
+
+Authentication scheme:
+
+```
+Authorization: Bearer <env.CRON_API_KEY>
+```
+
 # Todo
 
 ## MVP
@@ -39,10 +58,10 @@ pnpm dev            # Start the server on `http://localhost:3000`
 - [x] Auto-deny at
   - [x] Authentication
   - [x] Set status
-- [ ] Mobile
+- [x] Mobile
   - [x] Test / Update all components to be mobile friendly
   - [x] PWA integration
-  - [ ] Push notifications
+  - [x] Push notifications
 - [x] Verify /setup after nextui introduction
 - [ ] Invite flow
   - [x] Create auth entry
