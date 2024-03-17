@@ -1,13 +1,11 @@
 "use server";
 
-import dayjs, { Dayjs } from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
 import { PrismaTransaction } from "../types";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault("UTC");
+import { isNowAfterTime, shouldPerform } from "../time";
+import {
+  getUsersWithoutRegistrationForToday,
+  setUserOutForToday,
+} from "../user-actions";
 
 function getCompaniesToAutoDeny(prisma: PrismaTransaction) {
   return prisma.company.findMany({
@@ -40,47 +38,6 @@ function getCompaniesToAutoDeny(prisma: PrismaTransaction) {
   });
 }
 
-function shouldAutoDeny(now: Dayjs, denyTimeString: string, timezone: string) {
-  const [hour, minute] = denyTimeString.split(":");
-  const denyTime = dayjs.tz(
-    now.format(`YYYY-MM-DDT${hour}:${minute}:00.00`),
-    timezone
-  );
-
-  return now.isAfter(denyTime);
-}
-
-function usersWithoutRegistrationForToday(
-  prisma: PrismaTransaction,
-  companyId: string
-) {
-  return prisma.user.findMany({
-    where: {
-      company: {
-        id: companyId,
-      },
-      registrations: {
-        none: {
-          day: new Date(),
-        },
-      },
-    },
-  });
-}
-
-function setUserOutForToday(prisma: PrismaTransaction, userId: string) {
-  return prisma.registration.create({
-    data: {
-      status: "Out",
-      user: {
-        connect: {
-          id: userId,
-        },
-      },
-    },
-  });
-}
-
 function setCompanyAutoDeniedToday(
   prisma: PrismaTransaction,
   companyId: string
@@ -99,28 +56,25 @@ function setCompanyAutoDeniedToday(
   });
 }
 
+async function autoDenyCompany(prisma: PrismaTransaction, companyId: string) {
+  const usersAwaitingStatus = await getUsersWithoutRegistrationForToday(
+    prisma,
+    companyId
+  );
+
+  for (const user of usersAwaitingStatus) {
+    await setUserOutForToday(prisma, user.id);
+  }
+
+  await setCompanyAutoDeniedToday(prisma, companyId);
+}
+
 export async function autoDeny(prisma: PrismaTransaction) {
-  const now = dayjs();
   const companies = await getCompaniesToAutoDeny(prisma);
 
   for (const company of companies) {
-    if (
-      shouldAutoDeny(
-        now,
-        company.settings.auto_deny_at,
-        company.settings.timezone
-      )
-    ) {
-      const usersAwaitingStatus = await usersWithoutRegistrationForToday(
-        prisma,
-        company.id
-      );
-
-      for (const user of usersAwaitingStatus) {
-        await setUserOutForToday(prisma, user.id);
-      }
-
-      await setCompanyAutoDeniedToday(prisma, company.id);
+    if (shouldPerform("auto_deny_at", company.settings)) {
+      await autoDenyCompany(prisma, company.id);
     }
   }
 }

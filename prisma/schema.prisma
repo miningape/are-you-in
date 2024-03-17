@@ -53,7 +53,8 @@ model Settings {
     auto_deny_at          String
     timezone              String
 
-    last_denied_on DateTime? @db.Date
+    last_denied_on               DateTime? @db.Date
+    last_pushed_notifications_on DateTime? @db.Date
 
     company Company?
 }

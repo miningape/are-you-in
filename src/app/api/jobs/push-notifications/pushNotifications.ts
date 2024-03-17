@@ -1,22 +1,86 @@
 "use server";
 
-import * as dayjs from "dayjs";
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
-
 import { PrismaTransaction } from "../types";
 import { PushNotificationService } from "@/util/service/PushNotificationService";
 import { webpush } from "@/webpush";
+import { shouldPerform } from "../time";
+import { getUsersWithoutRegistrationForToday } from "../user-actions";
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault("UTC");
+async function getCompaniesToPushNotificationsTo(prisma: PrismaTransaction) {
+  return prisma.company.findMany({
+    where: {
+      settings: {
+        OR: [
+          {
+            last_pushed_notifications_on: null,
+          },
+          {
+            last_pushed_notifications_on: {
+              not: new Date(),
+            },
+          },
+        ],
+      },
+      users: {
+        some: {
+          registrations: {
+            none: {
+              day: new Date(),
+            },
+          },
+        },
+      },
+    },
+    include: {
+      settings: true,
+    },
+  });
+}
+
+function setCompanyPushedNotificationsToday(
+  prisma: PrismaTransaction,
+  companyId: string
+) {
+  return prisma.company.update({
+    where: {
+      id: companyId,
+    },
+    data: {
+      settings: {
+        update: {
+          last_pushed_notifications_on: new Date(),
+        },
+      },
+    },
+  });
+}
+
+async function pushNotificationsToCompany(
+  pushNotificationService: PushNotificationService,
+  prisma: PrismaTransaction,
+  companyId: string
+) {
+  const users = await getUsersWithoutRegistrationForToday(prisma, companyId);
+
+  for (const user of users) {
+    await pushNotificationService.push(user.push_subscriptions);
+  }
+
+  await setCompanyPushedNotificationsToday(prisma, companyId);
+}
 
 export async function pushNotifications(prisma: PrismaTransaction) {
-  console.log(webpush);
-  const pushNotificationService = new PushNotificationService(prisma, webpush);
+  const pushNotificationService = new PushNotificationService(webpush, prisma);
+  const companiesToPushNotificationsTo =
+    await getCompaniesToPushNotificationsTo(prisma);
 
-  await pushNotificationService.push(["af947048-d27f-4042-afe9-7f0740e4c232"]);
-
-  console.log("notifications pushed");
+  for (const company of companiesToPushNotificationsTo) {
+    if (shouldPerform("push_notifications_at", company.settings)) {
+      await pushNotificationsToCompany(
+        pushNotificationService,
+        prisma,
+        company.id
+      );
+    }
+  }
 }

@@ -1,33 +1,17 @@
-import { PrismaTransaction } from "@/app/api/jobs/types";
 import { WebPush, ZodPushSubscription } from "@/webpush";
 import { PushSubscription } from "@prisma/client";
 import { PUSH_NOTIFICATION_GET_STATUS } from "../constants/service-worker";
+import { PrismaTransaction } from "@/app/api/jobs/types";
+import { WebPushError } from "web-push";
 
 export class PushNotificationService {
-  private static instance: PushNotificationService | null = null;
-  constructor(private prisma: PrismaTransaction, private webpush: WebPush) {}
-
-  static get(prisma: PrismaTransaction, webpush: WebPush) {
-    console.log(PushNotificationService.instance);
-
-    if (PushNotificationService.instance === null) {
-      PushNotificationService.instance = new PushNotificationService(
-        prisma,
-        webpush
-      );
-    }
-
-    console.log(PushNotificationService.instance);
-
-    return PushNotificationService.instance;
-  }
-
-  static destroy() {
-    PushNotificationService.instance = null;
-  }
+  constructor(private webpush: WebPush, private prisma: PrismaTransaction) {}
 
   private static toZodPushSubscription(
-    subscription: PushSubscription
+    subscription: Pick<
+      PushSubscription,
+      "endpoint" | "keys_auth" | "keys_p256dh"
+    >
   ): ZodPushSubscription {
     return {
       endpoint: subscription.endpoint,
@@ -38,29 +22,37 @@ export class PushNotificationService {
     };
   }
 
-  async push(ids: string[]) {
-    console.log("ids", ids);
-
-    const subscriptions = await this.prisma.pushSubscription.findMany({
+  private deletePushSubscription(id: string) {
+    return this.prisma.pushSubscription.update({
       where: {
-        id: {
-          in: ids,
-        },
+        id,
+      },
+      data: {
+        deleted_at: new Date(),
       },
     });
+  }
 
-    console.log("subscriptions", subscriptions);
+  async push(subscriptions: PushSubscription[]) {
+    for (const subscription of subscriptions) {
+      const zodSubscription =
+        PushNotificationService.toZodPushSubscription(subscription);
 
-    const responses = subscriptions
-      .map(PushNotificationService.toZodPushSubscription)
-      .map((subscription) => {
-        console.log("sending");
-        return this.webpush.sendNotificationErrorable(
-          subscription,
+      try {
+        await this.webpush.sendNotificationErrorable(
+          zodSubscription,
           PUSH_NOTIFICATION_GET_STATUS
         );
-      });
+      } catch (e) {
+        if (e instanceof WebPushError) {
+          if (e.statusCode === 410) {
+            // Unsubscribed / dead subscription
+            await this.deletePushSubscription(subscription.id);
+          }
+        }
 
-    responses.forEach((promise) => promise.then((r) => console.log(r)));
+        console.error(`Failed to push subscription: "${subscription.id}"`, e);
+      }
+    }
   }
 }
