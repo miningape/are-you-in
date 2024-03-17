@@ -45,8 +45,6 @@ export function PushNotificationSwitch() {
     [auth.user.push_subscriptions, pushSubscription?.endpoint]
   );
 
-  console.log(persistedPushSubscription, pushSubscription);
-
   if (serviceWorker === undefined) {
     return (
       <Tooltip content="Disabled because there is no service worker">
