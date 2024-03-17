@@ -25,7 +25,7 @@ function PushNotificationSwitchComponent(props: SwitchProps) {
     >
       <div className="flex flex-col gap-1">
         <p className="text-medium">Push Notifications</p>
-        <p className="text-tiny text-default-400">For this device.</p>
+        <p className="text-tiny text-default-400">For this device</p>
       </div>
     </Switch>
   );
