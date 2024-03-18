@@ -14,7 +14,15 @@ function isAfterTime(datetime: Dayjs, time: string, timezone: string) {
     timezone
   );
 
-  return datetime.isAfter(denyTime);
+  const result = datetime.isAfter(denyTime);
+
+  console.log({
+    datetime: datetime.toISOString(),
+    denyTime: denyTime.toISOString(),
+    result,
+  });
+
+  return result;
 }
 
 export function isNowAfterTime(time: string, timezone: string) {
@@ -29,5 +37,6 @@ export function shouldPerform(
     "auto_deny_at" | "push_notifications_at" | "timezone"
   >
 ) {
+  console.log("shouldPerform", { setting: s, settings });
   return isNowAfterTime(settings[s], settings.timezone);
 }
