@@ -14,6 +14,7 @@ export function getUsersWithoutRegistrationForToday(
           day: new Date(),
         },
       },
+      deleted_at: null,
     },
     include: {
       push_subscriptions: {
