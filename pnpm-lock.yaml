@@ -23,6 +23,9 @@ dependencies:
   '@prisma/client':
     specifier: 5.7.1
     version: 5.7.1(prisma@5.7.1)
+  '@serwist/build':
+    specifier: ^8.4.4
+    version: 8.4.4
   '@serwist/next':
     specifier: ^8.4.4
     version: 8.4.4(next@14.2.0-canary.13)(webpack@5.90.3)

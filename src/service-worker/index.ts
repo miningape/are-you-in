@@ -1,5 +1,6 @@
-import type { PrecacheEntry } from "@serwist/precaching";
-import { installSerwist } from "@serwist/sw";
+import { PrecacheEntry } from "@serwist/precaching";
+import type { RuntimeCaching } from "@serwist/build";
+import { installSerwist, registerRuntimeCaching } from "@serwist/sw";
 
 declare const self: ServiceWorkerGlobalScope & {
   // Change this attribute's name to your `injectionPoint`.
@@ -53,10 +54,21 @@ self.addEventListener("notificationclick", (e) => {
   );
 });
 
+const httpMethods = ["GET", "DELETE", "HEAD", "PATCH", "POST", "PUT"] as const;
+registerRuntimeCaching(
+  ...httpMethods.map(
+    (method): RuntimeCaching => ({
+      method,
+      handler: "NetworkOnly",
+      urlPattern: /.*/g,
+    })
+  )
+);
+
 installSerwist({
   precacheEntries: self.__SW_MANIFEST,
   skipWaiting: true,
   clientsClaim: true,
-  navigationPreload: true,
+  navigationPreload: false,
   disableDevLogs: true,
 });
