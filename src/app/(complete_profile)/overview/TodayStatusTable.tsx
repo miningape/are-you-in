@@ -27,7 +27,7 @@ export function TodayStatusTable({ users, className }: TodayStatusTableProps) {
         <TableColumn>Name</TableColumn>
         <TableColumn>Status</TableColumn>
       </TableHeader>
-      <TableBody className="overflow-scroll">
+      <TableBody className="">
         {users.map((user) => (
           <TableRow key={user.id}>
             <TableCell>

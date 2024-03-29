@@ -6,14 +6,6 @@ import { FaGear } from "react-icons/fa6";
 import { CiLogout } from "react-icons/ci";
 import { TodayStatusTable } from "./TodayStatusTable";
 
-function ColorAvatar({ text }: { text: string }) {
-  return (
-    <span className="text-center text-lg p-1 bg-rose-500 border-2 rounded-full font-mono">
-      {text}
-    </span>
-  );
-}
-
 export default async function Overview() {
   const auth = await readAuth();
 
@@ -53,9 +45,9 @@ export default async function Overview() {
 
       <div className="flex flex-col h-dvh mx-5 justify-center">
         {/*eslint-disable-next-line react/no-unescaped-entities*/}
-        <div className="m-5 mx-auto text-3xl">Here's who's in today</div>
-        <div className="mx-auto md:w-3/4 md:h-3/4 overflow-scroll">
-          <TodayStatusTable users={users} />
+        <div className="mx-auto mb-5 text-3xl">Here's who's in today</div>
+        <div className="mx-auto w-full md:w-3/4 md:h-3/4 overflow-scroll">
+          <TodayStatusTable users={users} className="max-h-[44rem]" />
         </div>
       </div>
     </>
