@@ -58,7 +58,6 @@ export function PushNotificationSwitch() {
   return (
     <div className="relative">
       <Spinner />
-
       <PushNotificationSwitchComponent
         disabled={loading}
         isSelected={persistedPushSubscription !== undefined}

@@ -42,7 +42,7 @@ export function UserClient() {
   });
 
   return (
-    <form onSubmit={onSubmit} className="w-1/2 mx-auto">
+    <form onSubmit={onSubmit} className="w-3/4 md:w-1/2 mx-auto">
       <div className="flex flex-col gap-4">
         <Input
           isDisabled
