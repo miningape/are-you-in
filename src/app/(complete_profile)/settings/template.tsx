@@ -43,7 +43,7 @@ export default function Template({
         <SettingsNavTitle href="/settings">General</SettingsNavTitle>
         <SettingsNavTitle href="/settings/members">Members</SettingsNavTitle>
         <SettingsNavTitle href={`/settings/${auth.user.id}`}>
-          {auth.user.name ?? auth.email ?? "Myself"}
+          My Self
         </SettingsNavTitle>
       </div>
       <div className="mt-5">{children}</div>
