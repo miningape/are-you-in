@@ -1,11 +1,10 @@
 import { WebPush, ZodPushSubscription } from "@/webpush";
-import { PushSubscription } from "@prisma/client";
+import { PrismaClient, PushSubscription } from "@prisma/client";
 import { PUSH_NOTIFICATION_GET_STATUS } from "../constants/service-worker";
-import { PrismaTransaction } from "@/app/api/jobs/types";
 import { WebPushError } from "web-push";
 
 export class PushNotificationService {
-  constructor(private webpush: WebPush, private prisma: PrismaTransaction) {}
+  constructor(private webpush: WebPush, private prisma: PrismaClient) {}
 
   private static toZodPushSubscription(
     subscription: Pick<

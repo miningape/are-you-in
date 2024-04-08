@@ -1,7 +1,7 @@
-import { PrismaTransaction } from "./types";
+import { PrismaClient } from "@prisma/client";
 
 export function getUsersWithoutRegistrationForToday(
-  prisma: PrismaTransaction,
+  prisma: PrismaClient,
   companyId: string
 ) {
   return prisma.user.findMany({
@@ -26,7 +26,7 @@ export function getUsersWithoutRegistrationForToday(
   });
 }
 
-export function setUserOutForToday(prisma: PrismaTransaction, userId: string) {
+export function setUserOutForToday(prisma: PrismaClient, userId: string) {
   return prisma.registration.create({
     data: {
       status: "Out",

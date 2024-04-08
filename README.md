@@ -97,6 +97,15 @@ Authorization: Bearer <env.CRON_API_KEY>
 - [ ] Mass invite users
   - [ ] By email
   - [ ] By domain
+- [ ] Better in/out controls
+  - [ ] Morning / Afternoon only
+  - [ ] Multiple offices?
+  - [ ] Weekly / Bi-Weekly / Monthly auto controls
+    - [ ] View other's auto controls
+- [ ] Admin / User differentiation
+- [ ] View other user's profiles
+- [ ] API
+  - [ ] Create / Read / Delete registrations
 
 ## Go-To-Market
 

@@ -1,12 +1,12 @@
 "use server";
 
-import { PrismaTransaction } from "../types";
 import { PushNotificationService } from "@/util/service/PushNotificationService";
 import { webpush } from "@/webpush";
 import { shouldPerform } from "../time";
 import { getUsersWithoutRegistrationForToday } from "../user-actions";
+import { PrismaClient } from "@prisma/client";
 
-async function getCompaniesToPushNotificationsTo(prisma: PrismaTransaction) {
+async function getCompaniesToPushNotificationsTo(prisma: PrismaClient) {
   return prisma.company.findMany({
     where: {
       settings: {
@@ -38,7 +38,7 @@ async function getCompaniesToPushNotificationsTo(prisma: PrismaTransaction) {
 }
 
 function setCompanyPushedNotificationsToday(
-  prisma: PrismaTransaction,
+  prisma: PrismaClient,
   companyId: string
 ) {
   return prisma.company.update({
@@ -57,7 +57,7 @@ function setCompanyPushedNotificationsToday(
 
 async function pushNotificationsToCompany(
   pushNotificationService: PushNotificationService,
-  prisma: PrismaTransaction,
+  prisma: PrismaClient,
   companyId: string
 ) {
   const users = await getUsersWithoutRegistrationForToday(prisma, companyId);
@@ -69,7 +69,7 @@ async function pushNotificationsToCompany(
   await setCompanyPushedNotificationsToday(prisma, companyId);
 }
 
-export async function pushNotifications(prisma: PrismaTransaction) {
+export async function pushNotifications(prisma: PrismaClient) {
   const pushNotificationService = new PushNotificationService(webpush, prisma);
   const companiesToPushNotificationsTo =
     await getCompaniesToPushNotificationsTo(prisma);

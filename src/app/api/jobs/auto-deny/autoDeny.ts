@@ -1,13 +1,13 @@
 "use server";
 
-import { PrismaTransaction } from "../types";
-import { isNowAfterTime, shouldPerform } from "../time";
 import {
   getUsersWithoutRegistrationForToday,
   setUserOutForToday,
 } from "../user-actions";
+import { shouldPerform } from "../time";
+import { PrismaClient } from "@prisma/client";
 
-function getCompaniesToAutoDeny(prisma: PrismaTransaction) {
+function getCompaniesToAutoDeny(prisma: PrismaClient) {
   return prisma.company.findMany({
     where: {
       settings: {
@@ -38,10 +38,7 @@ function getCompaniesToAutoDeny(prisma: PrismaTransaction) {
   });
 }
 
-function setCompanyAutoDeniedToday(
-  prisma: PrismaTransaction,
-  companyId: string
-) {
+function setCompanyAutoDeniedToday(prisma: PrismaClient, companyId: string) {
   return prisma.company.update({
     where: {
       id: companyId,
@@ -56,7 +53,7 @@ function setCompanyAutoDeniedToday(
   });
 }
 
-async function autoDenyCompany(prisma: PrismaTransaction, companyId: string) {
+async function autoDenyCompany(prisma: PrismaClient, companyId: string) {
   const usersAwaitingStatus = await getUsersWithoutRegistrationForToday(
     prisma,
     companyId
@@ -69,7 +66,7 @@ async function autoDenyCompany(prisma: PrismaTransaction, companyId: string) {
   await setCompanyAutoDeniedToday(prisma, companyId);
 }
 
-export async function autoDeny(prisma: PrismaTransaction) {
+export async function autoDeny(prisma: PrismaClient) {
   const companies = await getCompaniesToAutoDeny(prisma);
 
   for (const company of companies) {
